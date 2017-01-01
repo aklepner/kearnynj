@@ -1,0 +1,19 @@
+<?php
+
+/**
+ * @file
+ *
+ * Uninstall function for the facebook_page_rules module.
+ */
+
+/**
+ * Implements hook_uninstall().
+ */
+function facebook_page_rules_uninstall() {
+  variable_del('facebook_page_rules_app_id');
+  variable_del('facebook_page_rules_app_secret');
+  variable_del('facebook_page_rules_pageid');
+  variable_del('facebook_page_rules_page_token');
+  variable_del('facebook_page_rules_page_url');
+  variable_del('facebook_page_rules_user_token');
+}

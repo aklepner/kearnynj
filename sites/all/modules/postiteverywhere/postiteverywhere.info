@@ -1,0 +1,18 @@
+; $Id: postiteverywhere.info,v 1.1 2010/01/28 12:13:07 confiz Exp $
+name = Postiteverywhere
+description = "Post your content to Facebook, Twitter, LinkedIn and FriendFeed"
+core = 7.x
+php = 5.2
+; Information added by drupal.org packaging script on 2010-09-19
+version = "7.x-1.08"
+core = "7.x"
+project = "postiteverywhere"
+datestamp = "1284876961"
+
+
+; Information added by drupal.org packaging script on 2013-10-01
+version = "7.x-2.x-dev"
+core = "7.x"
+project = "postiteverywhere"
+datestamp = "1380623608"
+

@@ -1,0 +1,68 @@
+<?php
+// $Id: postiteverywhere.install,v 1.1 2010/01/28 12:13:07 confiz Exp $
+
+/**
+ * @file
+ * Install, update, schema and uninstall functions for the PostItEveryWhere module.
+ * 
+ * Updated by: Ghulam Mohayyuddin
+ */
+
+/**
+ * Implementation of hook_install().
+ */
+function postiteverywhere_install() {
+
+ db_insert('postiteverywhere_networks')->fields(array('id'=> 1, 'name'=>'Facebook', 'image'=>'facebook.png', 'urlalias'=>'facebook'))->execute();
+ db_insert('postiteverywhere_networks')->fields(array('id'=> 2, 'name'=>'Twitter', 'image'=>'Twitter.png', 'urlalias'=>'Twitter'))->execute();
+ db_insert('postiteverywhere_networks')->fields(array('id'=> 3, 'name'=>'FriendFeed', 'image'=>'FriendFeed.png', 'urlalias'=>'FriendFeed'))->execute();
+ db_insert('postiteverywhere_networks')->fields(array('id'=> 4, 'name'=>'LinkedIn', 'image'=>'LinkedIn.png', 'urlalias'=>'LinkedIn'))->execute();
+
+}
+
+/**
+ * Implementation of hook_uninstall().
+ */
+function postiteverywhere_uninstall() {
+
+  // Delete our module's variable from the variables table.
+  variable_del('postiteverywhere_title_prepend');
+  variable_del('postiteverywhere_node_types');
+  variable_del('postiteverywhere_facebook_application_publickey');
+  variable_del('postiteverywhere_facebook_application_privatekey');
+  variable_del('postiteverywhere_twitter_application_publickey');
+  variable_del('postiteverywhere_twitter_application_privatekey');
+  variable_del('postiteverywhere_linkedin_application_publickey');
+  variable_del('postiteverywhere_linkedin_application_privatekey');
+  variable_del('postiteverywhere_friendfeed_application_publickey');
+  variable_del('postiteverywhere_friendfeed_application_privatekey');
+  variable_del('postiteverywhere_node_types');
+}
+
+/**
+ * Implementation of hook_schema().
+ */
+function postiteverywhere_schema() {
+  $schema['postiteverywhere_networks'] = array(
+    'fields' => array(
+      'id' => array('type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE, 'default' => 0),
+      'name' => array('type' => 'varchar', 'length' => 50, 'not null' => TRUE, 'default' => ''),
+      'image' => array('type' => 'varchar', 'length' => 255, 'not null' => TRUE, 'default' => ''),
+      'urlalias' => array('type' => 'varchar', 'length' => 255, 'not null' => TRUE, 'default' => ''),
+    ),
+    'primary key' => array('id'),
+  );
+  $schema['postiteverywhere_usernetwork'] = array(
+    'fields' => array(
+      'uid' => array('type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE, 'default' => 0),
+      'networkid' => array('type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE, 'default' => 0),
+      'usernetworkid' => array('type' => 'varchar', 'length' => 255, 'not null' => TRUE, 'default' => ''),
+    ),
+    'primary key' => array('uid', 'networkid'),
+    'foreign keys' => array(
+      'networkid' => array('postiteverywhere_networks' => 'id'),
+    )
+  );
+
+  return $schema;
+}
