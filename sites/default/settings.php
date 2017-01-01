@@ -239,7 +239,7 @@ $databases = array (
       'password' => 'BIPass2013!',
       'port' => '',
       'host' => 'localhost',
-      'database' => 'kearnynj_newdb',
+      'database' => 'kearnynj_db',
       'prefix' => '',
     ),
   ),
