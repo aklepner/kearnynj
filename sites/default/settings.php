@@ -89,8 +89,6 @@
  *   $db_url = 'mysqli://username:password@localhost/databasename';
  *   $db_url = 'pgsql://username:password@localhost/databasename';
  */
-$db_url = 'mysql://root:kalel123@localhost/kearnynew7';
-$db_prefix = '';
 
 /**
  * Access control for update.php script
@@ -229,16 +227,16 @@ $conf['clean_url'] = 1;
 # Added by drush site-upgrade.
 $db_prefix = '';
 # New db_url:
-$db_url = 'mysql://kearnynj_newdb:bipass2013@localhost/kearnynj_newdb';
+$db_url = 'mysql://kearnynj_db:BIPass2013!@localhost/kearnynj_db';
 # New databases array:
 $databases = array (
-  'default' => 
+  'default' =>
   array (
-    'default' => 
+    'default' =>
     array (
       'driver' => 'mysql',
-      'username' => 'kearnynj_newdb',
-      'password' => 'bipass2013',
+      'username' => 'kearnynj_db',
+      'password' => 'BIPass2013!',
       'port' => '',
       'host' => 'localhost',
       'database' => 'kearnynj_newdb',
