@@ -1,0 +1,13 @@
+[31-Mar-2016 16:34:08 America/New_York] PHP Fatal error:  Cannot redeclare class Facebook in /home/kearnynj/public_html/sites/all/libraries/facebook-php-sdk/src/facebook.php on line 228
+[18-Jan-2017 15:17:41 America/New_York] PHP Fatal error:  Allowed memory size of 268435456 bytes exhausted (tried to allocate 33600 bytes) in /home/kearnynj/public_html/modules/system/image.gd.inc on line 256
+[18-Jan-2017 15:17:46 America/New_York] PHP Fatal error:  Allowed memory size of 268435456 bytes exhausted (tried to allocate 33600 bytes) in /home/kearnynj/public_html/modules/system/image.gd.inc on line 256
+[18-Jan-2017 15:18:05 America/New_York] PHP Fatal error:  Allowed memory size of 268435456 bytes exhausted (tried to allocate 33600 bytes) in /home/kearnynj/public_html/modules/system/image.gd.inc on line 256
+[18-Jan-2017 15:18:25 America/New_York] PHP Fatal error:  Allowed memory size of 268435456 bytes exhausted (tried to allocate 33600 bytes) in /home/kearnynj/public_html/modules/system/image.gd.inc on line 256
+[18-Jan-2017 15:18:27 America/New_York] PHP Fatal error:  Allowed memory size of 268435456 bytes exhausted (tried to allocate 33600 bytes) in /home/kearnynj/public_html/modules/system/image.gd.inc on line 256
+[18-Jan-2017 15:18:32 America/New_York] PHP Fatal error:  Allowed memory size of 268435456 bytes exhausted (tried to allocate 33600 bytes) in /home/kearnynj/public_html/modules/system/image.gd.inc on line 256
+[23-Jan-2017 10:58:38 America/Chicago] PHP Parse error:  syntax error, unexpected '_drupal_session_read' (T_STRING), expecting '(' in /home/kearnynj/public_html/includes/session.inc on line 70
+[23-Jan-2017 10:59:36 America/Chicago] PHP Parse error:  syntax error, unexpected '_drupal_session_read' (T_STRING), expecting '(' in /home/kearnynj/public_html/includes/session.inc on line 70
+[23-Jan-2017 11:00:10 America/Chicago] PHP Warning:  require_once(/home/kearnynj/public_html/includes/bootstrap.inc): failed to open stream: No such file or directory in /home/kearnynj/public_html/index.php on line 20
+[23-Jan-2017 11:00:10 America/Chicago] PHP Fatal error:  require_once(): Failed opening required '/home/kearnynj/public_html/includes/bootstrap.inc' (include_path='.:/opt/php54/lib/php') in /home/kearnynj/public_html/index.php on line 20
+[23-Jan-2017 11:00:18 America/Chicago] PHP Warning:  require_once(/home/kearnynj/public_html/includes/bootstrap.inc): failed to open stream: No such file or directory in /home/kearnynj/public_html/index.php on line 20
+[23-Jan-2017 11:00:18 America/Chicago] PHP Fatal error:  require_once(): Failed opening required '/home/kearnynj/public_html/includes/bootstrap.inc' (include_path='.:/opt/php54/lib/php') in /home/kearnynj/public_html/index.php on line 20
