@@ -1,0 +1,119 @@
+<?php
+
+/**
+ * @file
+ */
+
+include_once dirname(__FILE__) . '/facebook_page_rules.inc';
+
+/**
+ * Implements hook_perm().
+ */
+function facebook_page_rules_permission() {
+  return array(
+    'facebook_page_rules_configure' => array(
+      'title' => 'Configure facebook page rules',
+      'warning' => 'Warning: Give to trusted roles only;',
+    ),
+  );
+}
+
+/**
+ * Implements hook_help().
+ */
+function facebook_page_rules_help($path, $arg) {
+  switch ($path) {
+    case 'admin/help#facebook_page_rules':
+      return t('This module provides a rules action to post to facebook page. You need to have admin rights of the facebook page to configure posting to that particular page. To post messages on user walls, consider ') . l('Facebook Rules', 'http://drupal.org/project/facebook_rules');
+  }
+}
+
+/**
+ * Implements hook_menu().
+ */
+function facebook_page_rules_menu() {
+
+  $items['admin/config/system/facebook_page_rules'] = array(
+    'title' => t('Configure Facebook Page Rules'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('facebook_page_rules_settings_form'),
+    'access arguments' => array('facebook_page_rules_configure'),
+    'file' => 'facebook_page_rules.inc',
+    'description' => 'Configure facebook page rules.',
+    'type' => MENU_NORMAL_ITEM,
+  );
+  $items['facebook_page_rules'] = array(
+    'title' => t('Configure Facebook Page Rules'),
+    'page callback' => 'facebook_page_rules_generate_token',
+	'access arguments' => array('facebook_page_rules_configure'),
+    'page arguments' => array(1),
+    'type' => MENU_CALLBACK,
+  );
+
+  return $items;
+}
+
+function facebook_page_rules_get_code($app_id) {
+  $redirect_url = $GLOBALS['base_url'] . '?q=' . 'facebook_page_rules';
+  $query = array(
+    'client_id' => $app_id,
+	'redirect_uri' => $redirect_url,
+	'scope' => 'publish_stream,manage_pages',
+  );
+  $url = url("https://www.facebook.com/dialog/oauth", array('query' => $query));
+  drupal_goto($url);
+}
+
+function facebook_page_rules_generate_token($code) {
+
+  $code = $_REQUEST['code'];
+  $app_id = variable_get('facebook_page_rules_app_id', NULL);
+  $app_secret = variable_get('facebook_page_rules_app_secret', NULL);
+  $query = array(
+    'client_id' => $app_id,
+	'client_secret' => $app_secret,
+	'redirect_uri' => $GLOBALS['base_url'] . '?q=' . 'facebook_page_rules',
+	'code' => $code,
+  );
+  $url = url("https://graph.facebook.com/oauth/access_token", array('query' => $query));
+  $request_value = drupal_http_request($url);
+  parse_str($request_value->data, $return_value);
+
+    if ($request_value->code == 200) {
+	  variable_set('facebook_page_rules_user_token', $return_value['access_token']);
+	  facebook_page_rules_validate($return_value['access_token']);
+	}
+	else {
+	$returned_value = json_decode($request_value->data, TRUE);
+	  watchdog('facebook_page_rules', 'Message: :msg<br />Type: :type<br />Code: :code<br />User: :uid', array(':msg' => $return_value['error']['message'], 'type' => $return_value['error']['type'], ':code' => $return_value['error']['code']), WATCHDOG_ERROR);
+	}
+	
+  drupal_goto('/admin/config/system/facebook_page_rules');
+}
+
+/**
+ * Function to post on wall.
+ */
+function facebook_page_rules_post($message, $link, $name, $caption, $description, $access_token) {
+  $page_id = variable_get('facebook_page_rules_pageid', NULL);
+
+  $url = "https://graph.facebook.com/$page_id/feed";
+
+  $data = array(
+    'access_token' => $access_token,
+    'message' => $message,
+	'link' => $link,
+	'name' => $name,
+	'caption' => $caption,
+	'description' => $description,
+    );
+  $response = drupal_http_request($url, array('data' => http_build_query($data), 'method' => 'POST'));
+    if ($response->code != 200) {
+	  $content = json_decode($response->data, TRUE);
+      watchdog('facebook_page_rules', 'Message: :msg<br />Type: :type<br />Code: :code<br />User: :uid', array(':msg' => $content['error']['message'], 'type' => $content['error']['type'], ':code' => $content['error']['code']), WATCHDOG_ERROR);
+	}
+}
+
+// add hook_cron.
+// set messages.
+// for post as user, use facebook rules integration.
